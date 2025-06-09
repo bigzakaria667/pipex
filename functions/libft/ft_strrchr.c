@@ -1,20 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/09 17:53:27 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/06/09 18:02:07 by zel-ghab         ###   ########.fr       */
+/*   Created: 2024/10/17 16:51:08 by zel-ghab          #+#    #+#             */
+/*   Updated: 2024/10/29 18:24:00 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <fcntl.h>
-# include <stdio.h>
+char	*ft_strrchr(const char *s, int c)
+{
+	int	len;
 
-#endif
+	len = 0;
+	while (s[len])
+		len++;
+	while (len >= 0)
+	{
+		if (s[len] == (unsigned char) c)
+			return ((char *)s + len);
+		len--;
+	}
+	return (0);
+}
+/*#include <stdio.h>
+int	main()
+{
+	printf("%s", ft_strrchr("hello", '\0'));
+}*/

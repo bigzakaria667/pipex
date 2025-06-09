@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/09 17:53:27 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/06/09 18:02:07 by zel-ghab         ###   ########.fr       */
+/*   Created: 2024/10/09 18:04:57 by zel-ghab          #+#    #+#             */
+/*   Updated: 2024/11/12 18:29:23 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <fcntl.h>
-# include <stdio.h>
+int	ft_isalpha(int a)
+{
+	if ((a >= 97 && a <= 122) || (a >= 65 && a <= 90))
+		return (1);
+	else
+		return (0);
+}
+/*
+int	main ()
+{
+	char *str [] = "Zakaria";
 
-#endif
+}
+*/

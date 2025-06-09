@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/09 17:53:27 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/06/09 18:02:07 by zel-ghab         ###   ########.fr       */
+/*   Created: 2024/12/07 12:14:43 by zel-ghab          #+#    #+#             */
+/*   Updated: 2024/12/07 17:34:31 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
+# include <stdarg.h>
+# include <stdlib.h>
 # include <unistd.h>
-# include <fcntl.h>
-# include <stdio.h>
+
+int	ft_printf(const char *format, ...);
+int	ft_putchar(int c);
+int	ft_putnbr(int n);
+int	ft_putstr(char *s);
+int	ft_hexadecimalong(unsigned long long n);
 
 #endif
