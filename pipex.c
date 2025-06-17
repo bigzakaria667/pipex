@@ -6,7 +6,7 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 16:15:48 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/06/12 17:55:59 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/06/17 14:46:46 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,14 @@ int	main(int argc, char **argv)
 	int	fd_outfile;
 	int	pipefd[2];
 	pid_t	pid;
+	char	*path;
+	char	**dirs;
+	char	*full_path;
+	char	*slash_cmd;
+	int	i;
 
+	// GET LE PATH
+	i = 0;
 	if (argc != 5)
 		return (1);
 	else
@@ -57,8 +64,25 @@ int	main(int argc, char **argv)
 		if (pid == -1)
 			return (perror("⚠️ Fork error !"), 1);
 		// PERMET DE CONNECTER MES FICHIERS A L'ENTREE OU LA SORTIE
-		dup2(fd_infile, 0);
-		dup2(pipefd[1], 1);
+		if (pid == 0)
+		{
+			// CMD1
+			dup2(fd_infile, 0);
+			dup2(pipefd[1], 1);
+			// FERMETURE DES FD INUTILES
+			close(fd_infile);
+			close(pipefd[0]);
+			close(pipefd[1]);
+			// PARSER CMD1
+			ft_split(argv[2], ' ');
+			// TROUVER LE PATH ET L'EMPLACEMENT DU CMD
+			path = getenv("PATH");
+			dirs = ft_split(path. ':');
+			slash_cmd = ft_strjoin("/", cmd);
+			full_path = ft_strjoin(dirs[i], slash_cmd);
+		}
+		else
+			// CMD2
 	}
 	return (0);
 }
