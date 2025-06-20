@@ -6,7 +6,7 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 16:15:48 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/06/17 14:46:46 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/06/20 20:26:16 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,53 @@ int	write_outfile(char *s)
 	return (fd);
 }
 
-int	main(int argc, char **argv)
+char	*get_path(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
+			return (envp[i] + 5);
+		i++;
+	}
+	return (NULL);
+}
+
+char	*find_cmd_path(char **cmd, char **envp)
+{
+	char	*path;
+	char	*slash_cmd;
+	char	**dirs;
+	char	*full_path;
+	int	i;
+
+	i = 0;
+	path = get_path(envp);
+	dprintf(2, "PATH = %s\n", path);
+	dirs = ft_split(path, ':');	
+	while (dirs[i])
+	{
+		slash_cmd = ft_strjoin("/", cmd[0]);
+		full_path = ft_strjoin(dirs[i], slash_cmd);
+		if (access(full_path, X_OK) == 0)
+			return (full_path);
+		free(full_path);
+		i++;
+	}
+	return (NULL);
+}
+
+int	main(int argc, char **argv, char **envp)
 {
 	int	fd_infile;
 	int	fd_outfile;
 	int	pipefd[2];
 	pid_t	pid;
-	char	*path;
-	char	**dirs;
+	char	**cmd;
 	char	*full_path;
-	char	*slash_cmd;
-	int	i;
 
-	// GET LE PATH
-	i = 0;
 	if (argc != 5)
 		return (1);
 	else
@@ -58,7 +91,7 @@ int	main(int argc, char **argv)
 			return (1);
 		// VERIF DU PIPE
 		if (pipe(pipefd) == -1)
-			return (perror("⚠️ Pipe error !") ,1);
+			return (perror("⚠️ Pipe error !"), 1);
 		// CREATION DU FORK
 		pid = fork();
 		if (pid == -1)
@@ -74,15 +107,18 @@ int	main(int argc, char **argv)
 			close(pipefd[0]);
 			close(pipefd[1]);
 			// PARSER CMD1
-			ft_split(argv[2], ' ');
-			// TROUVER LE PATH ET L'EMPLACEMENT DU CMD
-			path = getenv("PATH");
-			dirs = ft_split(path. ':');
-			slash_cmd = ft_strjoin("/", cmd);
-			full_path = ft_strjoin(dirs[i], slash_cmd);
+			cmd = ft_split(argv[2], ' ');
+			if (!cmd)
+				return (1);
+			// FIND LE PATH DU CMD
+			full_path = find_cmd_path(cmd, envp);
+			dprintf(2, "FULL PATH = %s\n", full_path);
+			if (!full_path)
+				return (perror("⚠️ Path error !"), 1);
+			// EXECVE
+			if (execve(full_path, cmd, envp) == -1)
+				return (perror("⚠️ Execve error !"), 1);
 		}
-		else
-			// CMD2
 	}
 	return (0);
 }
