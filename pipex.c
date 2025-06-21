@@ -6,7 +6,7 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 16:15:48 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/06/20 20:50:33 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/06/21 15:34:51 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,11 @@ int	main(int argc, char **argv, char **envp)
 		// CHILD = CMD1
 		if (pid == 0)
 		{
-			if (cmd1(fd_infile, fd_outfile, pidefd) == 1)
+			if (cmd1(fd_infile, argv, pipefd, envp) == 1)
 				return (1);
 		}
 		// PARENT = CMD2
-		else
-			
+		//else
 	}
 	return (0);
 }

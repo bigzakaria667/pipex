@@ -6,7 +6,7 @@
 #    By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/09 18:01:25 by zel-ghab          #+#    #+#              #
-#    Updated: 2025/06/20 19:28:54 by zel-ghab         ###   ########.fr        #
+#    Updated: 2025/06/21 15:26:07 by zel-ghab         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,9 @@ LDFLAGS       = -L $(PRINTF) -L $(LIBFT) -lft -lftprintf
 ###########################################
 ## SOURCES
 
-SRC_FILES	= pipex.c
+SRC_FILES	= pipex.c \
+		cmd1.c \
+		cmd2.c
 
 ###########################################
 ## OBJECTS

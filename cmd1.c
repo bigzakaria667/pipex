@@ -6,7 +6,7 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 20:32:00 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/06/20 20:53:05 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/06/21 15:36:25 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,11 @@ char	*find_cmd_path(char **cmd, char **envp)
 	return (NULL);
 }
 
-int	cmd1(int fd_infile, int fd_outfile, int *pipefd)
+int	cmd1(int fd_infile, char **argv, int *pipefd, char **envp)
 {
+	char	**cmd;
+	char	*full_path;
+
 	// PERMET DE CONNECTER MES FICHIERS A L'ENTREE OU A LA SORTIE
 	dup2(fd_infile, 0);
 	dup2(pipefd[1], 1);
@@ -75,4 +78,5 @@ int	cmd1(int fd_infile, int fd_outfile, int *pipefd)
 	// EXECVE
 	if (execve(full_path, cmd, envp) == -1)
 		return (perror("⚠️ Execve error !"), 1);
+	return (0);
 }
