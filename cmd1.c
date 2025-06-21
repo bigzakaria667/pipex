@@ -6,7 +6,7 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 20:32:00 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/06/21 15:36:25 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/06/21 17:58:19 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ char	*find_cmd_path(char **cmd, char **envp)
 
 	i = 0;
 	path = get_path(envp);
-	dprintf(2, "PATH = %s\n", path);
 	dirs = ft_split(path, ':');	
 	while (dirs[i])
 	{
@@ -56,7 +55,7 @@ char	*find_cmd_path(char **cmd, char **envp)
 
 int	cmd1(int fd_infile, char **argv, int *pipefd, char **envp)
 {
-	char	**cmd;
+	char	**cmd1;
 	char	*full_path;
 
 	// PERMET DE CONNECTER MES FICHIERS A L'ENTREE OU A LA SORTIE
@@ -67,16 +66,15 @@ int	cmd1(int fd_infile, char **argv, int *pipefd, char **envp)
 	close(pipefd[0]);
 	close(pipefd[1]);
 	// PARSER CMD1
-	cmd = ft_split(argv[2], ' ');
-	if (!cmd)
+	cmd1 = ft_split(argv[2], ' ');
+	if (!cmd1)
 		return (1);
 	// FIND LE PATH DU CMD
-	full_path = find_cmd_path(cmd, envp);
-	dprintf(2, "FULL PATH = %s\n", full_path);
+	full_path = find_cmd_path(cmd1, envp);
 	if (!full_path)
 		return (perror("⚠️ Path error !"), 1);
 	// EXECVE
-	if (execve(full_path, cmd, envp) == -1)
+	if (execve(full_path, cmd1, envp) == -1)
 		return (perror("⚠️ Execve error !"), 1);
 	return (0);
 }
