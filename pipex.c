@@ -6,7 +6,7 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 16:15:48 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/06/21 19:13:16 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/06/23 15:54:08 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int	instructions(char **argv, char **envp)
 	int	fd_infile;
 	int	fd_outfile;
 	int	pipefd[2];
-	pid_t	pid;
-	pid_t	pid2;
+	int	pid;
+	int	pid2;
 
 	// LECTURE ET ECRITURE
 	fd_infile = read_infile(argv[1]);
@@ -58,16 +58,20 @@ int	instructions(char **argv, char **envp)
 	{
 		if (cmd1(fd_infile, argv, pipefd, envp) == 1)
 			return (1);
+		exit(0);
 	}
 	// PARENT = CMD2
 	else
 	{
 		pid2 = fork();
-		if (pid == -1)
+		if (pid2 == -1)
 			return (perror("⚠️ Fork error !"), 1);
-		if (pid == 0)
+		if (pid2 == 0)
 			cmd2(fd_outfile, argv, pipefd, envp);
+		exit(0);
 	}
+	waitpid(pid, NULL, 0);
+	waitpid(pid2, NULL, 0);
 	return (0);
 }
 
