@@ -6,14 +6,13 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:53:27 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/06/26 19:26:19 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/06/26 20:53:58 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
-# include <errno.h>
 # include <string.h>
 # include <unistd.h>
 # include <fcntl.h>

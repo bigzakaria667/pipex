@@ -6,7 +6,7 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 16:15:48 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/06/26 20:45:04 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/06/26 20:53:19 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,6 @@ int	write_outfile(char *s, int fd_infile)
 	return (fd);
 }
 
-void	wait_pid(int pid, int pid2)
-{
-	waitpid(pid, NULL, 0);
-	waitpid(pid2, NULL, 0);
-}
-
 void	instructions(char **argv, char **envp)
 {
 	int	fd_infile;
@@ -57,6 +51,7 @@ void	instructions(char **argv, char **envp)
 		perror("⚠️ Fork error !"), exit(1));
 	if (pid == 0)
 		cmd1(fd_infile, argv, pipefd, envp);
+	waitpid(pid, NULL, 0);
 	pid2 = fork();
 	if (pid2 == -1)
 		return (close_all(fd_infile, fd_outfile, pipefd), \
@@ -64,7 +59,6 @@ void	instructions(char **argv, char **envp)
 	if (pid2 == 0)
 		cmd2(fd_outfile, argv, pipefd, envp);
 	close_all(fd_infile, fd_outfile, pipefd);
-	wait_pid(pid, pid2);
 }
 
 int	main(int argc, char **argv, char **envp)
