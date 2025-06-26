@@ -6,7 +6,7 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 20:32:00 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/06/23 18:41:03 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/06/26 18:27:39 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,15 @@
 
 void	close_all(int fd_infile, int fd_outfile, int *pipefd)
 {
-	close(fd_infile);
-	close(fd_outfile);
-	close(pipefd[0]);
-	close(pipefd[1]);
+	if (fd_infile >= 0)
+		close(fd_infile);
+	if (fd_outfile >= 0)
+		close(fd_outfile);
+	if (pipefd)
+	{
+		close(pipefd[0]);
+		close(pipefd[1]);
+	}
 }
 
 void	free_split(char ***split)
@@ -55,11 +60,11 @@ char	*find_cmd_path(char **cmd, char **envp)
 	char	*slash_cmd;
 	char	**dirs;
 	char	*full_path;
-	int	i;
+	int		i;
 
 	i = 0;
 	path = get_path(envp);
-	dirs = ft_split(path, ':');	
+	dirs = ft_split(path, ':');
 	while (dirs[i])
 	{
 		slash_cmd = ft_strjoin("/", cmd[0]);

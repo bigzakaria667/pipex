@@ -6,7 +6,7 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:53:27 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/06/23 21:41:48 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/06/26 18:08:39 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@
 # include "functions/libft/libft.h"
 
 /*----------------  pipex.c  ---------------*/
-int	read_infile(char *s);
-int	write_outfile(char *s);
+int		read_infile(char *s);
+int		write_outfile(char *s);
 void	instructions(char **argv, char **envp);
-int	main(int argc, char **argv, char **envp);
+int		main(int argc, char **argv, char **envp);
 
 /*----------------  cmd1.c  ---------------*/
 void	cmd1(int fd_infile, char **argv, int *pipefd, char **envp);
