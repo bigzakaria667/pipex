@@ -6,7 +6,7 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 16:15:48 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/06/26 18:35:04 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/06/26 20:45:04 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	read_infile(char *s)
 
 	fd = open(s, O_RDONLY);
 	if (fd < 0)
-		return (perror("⚠️ Open error !"), exit(1), -1);
+		return (perror("pipex"), exit(1), -1);
 	return (fd);
 }
 
@@ -47,7 +47,7 @@ void	instructions(char **argv, char **envp)
 	int	pid2;
 
 	fd_infile = read_infile(argv[1]);
-	fd_outfile = write_outfile(argv[4]);
+	fd_outfile = write_outfile(argv[4], fd_infile);
 	if (pipe(pipefd) == -1)
 		return (close_all(fd_infile, fd_outfile, pipefd), \
 		perror("⚠️ Pipe error !"), exit(1));

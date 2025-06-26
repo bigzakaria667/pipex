@@ -6,13 +6,15 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:53:27 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/06/26 18:08:39 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/06/26 19:26:19 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
+# include <errno.h>
+# include <string.h>
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdio.h>
@@ -23,7 +25,7 @@
 
 /*----------------  pipex.c  ---------------*/
 int		read_infile(char *s);
-int		write_outfile(char *s);
+int		write_outfile(char *s, int fd_infile);
 void	instructions(char **argv, char **envp);
 int		main(int argc, char **argv, char **envp);
 
