@@ -6,22 +6,22 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 20:32:00 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/06/26 18:27:39 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/06/27 17:20:20 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	close_all(int fd_infile, int fd_outfile, int *pipefd)
+void	close_all(t_fd fd)
 {
-	if (fd_infile >= 0)
-		close(fd_infile);
-	if (fd_outfile >= 0)
-		close(fd_outfile);
-	if (pipefd)
+	if (fd.infile >= 0)
+		close(fd.infile);
+	if (fd.outfile >= 0)
+		close(fd.outfile);
+	if (fd.pipefd)
 	{
-		close(pipefd[0]);
-		close(pipefd[1]);
+		close(fd.pipefd[0]);
+		close(fd.pipefd[1]);
 	}
 }
 

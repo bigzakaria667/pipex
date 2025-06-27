@@ -6,7 +6,7 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 16:15:48 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/06/26 20:53:19 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/06/27 17:29:24 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,31 +34,27 @@ int	write_outfile(char *s, int fd_infile)
 
 void	instructions(char **argv, char **envp)
 {
-	int	fd_infile;
-	int	fd_outfile;
-	int	pipefd[2];
-	int	pid;
-	int	pid2;
+	t_fd	fd;
+	int		pid;
+	int		pid2;
 
-	fd_infile = read_infile(argv[1]);
-	fd_outfile = write_outfile(argv[4], fd_infile);
-	if (pipe(pipefd) == -1)
-		return (close_all(fd_infile, fd_outfile, pipefd), \
-		perror("⚠️ Pipe error !"), exit(1));
+	fd.infile = read_infile(argv[1]);
+	fd.outfile = write_outfile(argv[4], fd.infile);
+	if (pipe(fd.pipefd) == -1)
+		return (close_all(fd), perror("⚠️ Pipe error !"), exit(1));
 	pid = fork();
 	if (pid == -1)
-		return (close_all(fd_infile, fd_outfile, pipefd), \
-		perror("⚠️ Fork error !"), exit(1));
+		return (close_all(fd), perror("⚠️ Fork error !"), exit(1));
 	if (pid == 0)
-		cmd1(fd_infile, argv, pipefd, envp);
+		cmd1(fd, argv, envp);
 	waitpid(pid, NULL, 0);
 	pid2 = fork();
 	if (pid2 == -1)
-		return (close_all(fd_infile, fd_outfile, pipefd), \
-		perror("⚠️ Fork error !"), exit(1));
+		return (close_all(fd), perror("⚠️ Fork error !"), exit(1));
 	if (pid2 == 0)
-		cmd2(fd_outfile, argv, pipefd, envp);
-	close_all(fd_infile, fd_outfile, pipefd);
+		cmd2(fd, argv, envp);
+	close_all(fd);
+	waitpid(pid2, NULL, 0);
 }
 
 int	main(int argc, char **argv, char **envp)
